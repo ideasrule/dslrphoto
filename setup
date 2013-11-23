@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#install gphoto & dependencies
+apt-get install libusb-dev libexif-dev
+
+#install packages needed for RAW -> FITS
+apt-get install dcraw libcfitsio
+
+#need fftw3
