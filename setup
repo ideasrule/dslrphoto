@@ -1,7 +1,25 @@
 #!/bin/bash
 
 #install gphoto & dependencies
-apt-get install libusb-dev libexif-dev
+sudo apt-get install libusb-dev libexif-dev
 
 #install packages needed for RAW -> FITS
-apt-get install libcfitsio3-dev
+sudo apt-get install libcfitsio3-dev
+#required for dcraw
+sudo apt-get install libjasper-dev libjpeg8-dev liblcms-dev
+#get libgphoto2-2.5.2
+sudo apt-get install libltdl-dev libpopt-dev
+
+wget http://downloads.sourceforge.net/project/gphoto/libgphoto/2.5.2/libgphoto2-2.5.2.tar.gz
+tar xzf libgphoto2-2.5.2.tar.gz
+cd libgphoto2-2.5.2
+./configure --prefix=/usr
+make
+sudo make install
+
+wget http://downloads.sourceforge.net/project/gphoto/gphoto/2.5.2/gphoto2-2.5.2.tar.gz
+tar xzf gphoto2-2.5.2.tar.gz
+cd gphoto2-2.5.2
+./configure --prefix=/usr
+make
+sudo make install

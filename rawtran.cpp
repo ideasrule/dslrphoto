@@ -208,7 +208,7 @@ int rawtran(const char *raw, const char *fitsname, const char *color,
 	FILE *dcraw;
 	struct tm tm;
 
-	const char *dcraw_info_command = "dcraw -i -v -c ";
+	const char *dcraw_info_command = "./dcraw -i -v -c ";
 	const char *dcraw_convert_command;
 	char *com;
 

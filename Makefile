@@ -1,7 +1,7 @@
 CC = g++
 
 #no-write-strings to get rid of warnings in C code
-FLAGS = -lgphoto2 -lcfitsio -Wno-write-strings -g
+FLAGS = -lgphoto2 -lgphoto2_port -lcfitsio -Wno-write-strings -g
 FILES = cameracontroller.cpp config.c context.c rawtran.cpp
 
 all: dcraw $(FILES)
