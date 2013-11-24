@@ -2,10 +2,11 @@ CC = g++
 
 #no-write-strings to get rid of warnings in C code
 FLAGS = -lgphoto2 -lgphoto2_port -lcfitsio -Wno-write-strings -g
-FILES = cameracontroller.cpp config.c context.c rawtran.cpp
+FILES = config.c context.c rawtran.cpp
 
 all: dcraw $(FILES)
-	$(CC) $(FILES) $(FLAGS) -o capture
+	$(CC) $(FILES) cameracontroller.cpp $(FLAGS) -o capture
+	$(CC) $(FILES) takeflats.cpp $(FLAGS) -o takeflats
 
 dcraw: dcraw.c
 	gcc -o dcraw -O4 dcraw.c -lm -ljasper -ljpeg -llcms 
