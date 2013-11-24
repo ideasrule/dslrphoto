@@ -178,22 +178,22 @@ public:
 
 		int last_quality = -1;
 		int quality = -1;
-		//int ntries=0;
+		char c='A';
 		while(1) {
-			set_config_value_string(camera, "output", "TFT", context);
-			capture_to_file(FOCUS_FILE, FOCUS_EXPTIME, FOCUS_ISO);
-			set_config_value_string(camera, "output", "PC", context);
-			quality = focus_quality(FOCUS_FILE + "G.fits");
+			capture_to_file(FOCUS_FILE+c, FOCUS_EXPTIME, FOCUS_ISO);
+			quality = focus_quality(FOCUS_FILE +c+ "G.fits");
 			std::cout << quality << std::endl;
 			if (quality < 0.95*last_quality) break;
-			//if (ntries > 10) break;
 			set_config_value_string(camera, "manualfocusdrive", "Near 2", context);
 			last_quality = quality;
-		//	ntries++;
+			c++;
 		}
 		//we actually moved past focus by one step, so go back
 		set_config_value_string(camera, "manualfocusdrive", "Far 2", context);
+		capture_to_file("final_focus", FOCUS_EXPTIME, FOCUS_ISO);
+		std::cout << focus_quality("final_focusG.fits") << std::endl;
 		set_config_value_string(camera, "output", "TFT", context);
+		
 		std::cout << "Focused!\n";
 		return;
 	}
