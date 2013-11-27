@@ -52,17 +52,22 @@ double get_average(std::string filename) {
 	return sum/values.size();
 }
 int main(int argc, char** argv) {
-	int nflats = 10;
-	std::string flatTestName = "testflat";
-	double exptime = 0.1;
-	std::string iso = "100";
-	double satVal = 15304;
+	int nflats = 3;
+	std::stringstream ss1;
+	srand(time(NULL));
+	ss1 << "flat" << rand()%1000 << "_";
+	std::string flatTestName = ss1.str() + "test";
+	std::string flatName = ss1.str();
+	
+	double exptime = 0.5;
+	std::string iso = "200";
+	double satVal = 16384;
+	//	double satVal=3000;
 	double thresVal = satVal/3;
 	int ret;
 
 	CameraController c;
 	//take a flat with minimal exposure time, double exposure until threshold exceeded
-
 	while(1) {
 		ret = c.capture_to_file(flatTestName, exptime, iso);
 		if (ret != GP_OK) {
@@ -74,12 +79,12 @@ int main(int argc, char** argv) {
 		double bval = get_average(flatTestName+"B.fits");
 		std::cout << rval << " " << gval << " " << bval << std::endl;
 		if (rval > thresVal && gval > thresVal && bval > thresVal) break;
-		exptime *= 1.5;
+		exptime *= 2;
 	}
 	//we've found a good value, so take flats
 	for (int i=0; i < nflats; i++) {
 		std::stringstream ss;
-		ss << "flat" << i;
+		ss << flatName << i;
 		ret = c.capture_to_file(ss.str(), exptime, iso);
 		if (ret != GP_OK) {
 			std::cout << "Error while capturing image" << std::endl;

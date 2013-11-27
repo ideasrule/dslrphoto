@@ -1,6 +1,6 @@
 #!/bin/bash
-for i in {1..60}
+for i in {21..40}
 do
-	NAME="andromeda/and$i"
-	./capture -i 400 -o $NAME 60
+	NAME="ursaminor/ursa$i"
+	./capture -i 200 -o $NAME 60
 done

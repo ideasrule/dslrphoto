@@ -48,10 +48,9 @@ private:
 	int focus_quality(std::string filename) {
 		fitsfile *fptr;   /* FITS file pointer, defined in fitsio.h */
 		int status = 0;   /* CFITSIO status value MUST be initialized to zero! */
-		int bitpix, naxis, ii, anynul;
+		int bitpix, naxis, ii;
 		long naxes[2] = {1,1}, fpixel[2] = {1,1};
 		double *pixels;
-		char format[20], hdformat[20];
 
 		std::vector<double> values; //stores the values of all pixels in image
 
@@ -69,14 +68,6 @@ private:
 					if (pixels == NULL) {
 						printf("Memory allocation error\n");
 						return(1);
-					}
-
-					if (bitpix > 0) {  /* set the default output format string */
-						strcpy(hdformat, " %7d");
-						strcpy(format,   " %7.0f");
-					} else {
-						strcpy(hdformat, " %15d");
-						strcpy(format,   " %15.5f");
 					}
 
 					/* loop over all the rows in the image, top to bottom */
