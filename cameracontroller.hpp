@@ -111,7 +111,8 @@ public:
 	}
 
 	int capture_to_file(std::string file_prefix, float exposure,
-			std::string iso="1600", std::string aperture="0") {
+			std::string iso="1600", std::string aperture="0",
+			bool gen_fits=true) {
 		int aborted = 0;
 		int fd, retval;
 		CameraFile *canonfile;
@@ -156,7 +157,7 @@ public:
 		if (retval != GP_OK) return retval;
 
 		gp_file_free(canonfile);
-		produce_fits(file_prefix, aborted);
+		if (gen_fits) produce_fits(file_prefix, aborted);
 		return GP_OK;
 	}
 

@@ -7,6 +7,9 @@ FILES = config.c context.c rawtran.cpp
 all: dcraw $(FILES)
 	$(CC) $(FILES) cameracontroller.cpp $(FLAGS) -o capture
 	$(CC) $(FILES) takeflats.cpp $(FLAGS) -o takeflats
+	$(CC) -g IndiControl.cpp -I/usr/include/libindi -I/usr/include/libnova -lindi -lindiclient -lpthread -lz -o goto
+	$(CC) -g MoveBack.cpp -I/usr/include/libindi -I/usr/include/libnova -lindi -lindiclient -lpthread -lz -o moveback
+
 
 dcraw: dcraw.c
 	gcc -o dcraw -O4 dcraw.c -lm -ljasper -ljpeg -llcms 

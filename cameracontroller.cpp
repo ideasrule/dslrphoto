@@ -13,6 +13,7 @@ void print_help(char* progname) {
 	std::cout << "\t-t{zero|dark|flat|object}: Image type. Default 'object'.\n";
 	std::cout << "\t-o filepre: output files will be this + .cr2, R.fits, etc\n";
 	std::cout << "\t-f: focus the camera before beginning the exposure\n";
+	std::cout << "\t-N: do not generate FITS files\n";
 	std::cout << "\t-h print help\n";
 }
 
@@ -26,8 +27,9 @@ int main(int argc, char** argv) {
 	float exptime;
 	std::string filepre = "image";
 	bool focus = false;
+	bool gen_fits = true;
 
-	while ((opt = getopt(argc, argv, "i:a:m:t:o:fh")) != -1) {
+	while ((opt = getopt(argc, argv, "i:a:m:t:o:fhN")) != -1) {
 		switch(opt)
 		{
 		case 'i':
@@ -51,6 +53,9 @@ int main(int argc, char** argv) {
 		case 'f':
 			focus = true;
 			break;
+		case 'N':
+			gen_fits = false;
+			break;
 		case '?':
 			return 1;
 		default:
@@ -64,11 +69,10 @@ int main(int argc, char** argv) {
 		return -1;
 	}
 	exptime = atof(argv[argc-1]);
-
 	CameraController c;
 	int ret;
 	if (focus) c.focus();
-	ret = c.capture_to_file(filepre, exptime, iso, aperture);
+	ret = c.capture_to_file(filepre, exptime, iso, aperture, gen_fits);
 	if (ret != GP_OK) {
 		std::cout << "Error while capturing image" << std::endl;
 		return ret;

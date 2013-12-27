@@ -52,21 +52,22 @@ double get_average(std::string filename) {
 	return sum/values.size();
 }
 int main(int argc, char** argv) {
-	int nflats = 3;
+	//int nflats = 3;
 	std::stringstream ss1;
-	srand(time(NULL));
-	ss1 << "flat" << rand()%1000 << "_";
+	ss1 << "flat" << argv[1] << "_";
 	std::string flatTestName = ss1.str() + "test";
 	std::string flatName = ss1.str();
-	
-	double exptime = 0.5;
-	std::string iso = "200";
+
+	double exptime = 0.1;
+	std::string iso = "100";
 	double satVal = 16384;
 	//	double satVal=3000;
 	double thresVal = satVal/3;
+	double desiredVal = satVal/2;
 	int ret;
 
 	CameraController c;
+	double rval,gval,bval;
 	//take a flat with minimal exposure time, double exposure until threshold exceeded
 	while(1) {
 		ret = c.capture_to_file(flatTestName, exptime, iso);
@@ -74,14 +75,19 @@ int main(int argc, char** argv) {
 			std::cout << "Error while capturing image" << std::endl;
 			return ret;
 		}
-		double rval = get_average(flatTestName+"R.fits");
-		double gval = get_average(flatTestName+"G.fits");
-		double bval = get_average(flatTestName+"B.fits");
+		rval = get_average(flatTestName+"R.fits");
+		gval = get_average(flatTestName+"G.fits");
+		bval = get_average(flatTestName+"B.fits");
 		std::cout << rval << " " << gval << " " << bval << std::endl;
 		if (rval > thresVal && gval > thresVal && bval > thresVal) break;
 		exptime *= 2;
 	}
 	//we've found a good value, so take flats
+	c.capture_to_file(flatName + "_red", exptime*desiredVal/rval);
+	c.capture_to_file(flatName + "_green", exptime*desiredVal/gval);
+	c.capture_to_file(flatName + "_blue", exptime*desiredVal/bval);
+
+	/*//we've found a good value, so take flats
 	for (int i=0; i < nflats; i++) {
 		std::stringstream ss;
 		ss << flatName << i;
@@ -90,6 +96,6 @@ int main(int argc, char** argv) {
 			std::cout << "Error while capturing image" << std::endl;
 			return ret;
 		}
-	}
+	}*/
 	return 0;
 }

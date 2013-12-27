@@ -23,3 +23,11 @@ cd gphoto2-2.5.2
 ./configure --prefix=/usr
 make
 sudo make install
+
+#set up indi, eqmod, libnova
+sudo apt-get install libusb-dev libnova-dev
+wget http://www.indilib.org/download/finish/10-source/8-indi-library.html -O indi.tar.gz
+tar xzf indi.tar.gz
+cd libindi*
+cmake -DCMAKE_INSTALL_PREFIX=/usr . .
+sudo make install

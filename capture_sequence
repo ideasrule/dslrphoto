@@ -1,6 +1,6 @@
 #!/bin/bash
-for i in {21..40}
+for i in {1..480}
 do
-	NAME="ursaminor/ursa$i"
-	./capture -i 200 -o $NAME 60
+	NAME="geminids/gem$i"
+	./capture -i 200 -o $NAME 30
 done
