@@ -14,7 +14,7 @@ const int CAMERA_BITDEPTH = 14;
 
 const int FOCUS_EXPTIME = 5;
 //use the nth brightest pixel for autofocus
-const int FOCUS_INDEX = 50;
+const int FOCUS_INDEX = 100;
 const std::string FOCUS_ISO = "1600";
 //where to save images taken during focusing
 const std::string FOCUS_FILE = "tmp_focus";

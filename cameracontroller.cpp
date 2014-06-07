@@ -70,6 +70,8 @@ int main(int argc, char** argv) {
 	}
 	exptime = atof(argv[argc-1]);
 	CameraController c;
+	//	c.test_focus(false);
+	///	return 0;
 	int ret;
 	if (focus) c.focus();
 	ret = c.capture_to_file(filepre, exptime, iso, aperture, gen_fits);

@@ -161,12 +161,25 @@ public:
 		return GP_OK;
 	}
 
+  void test_focus(bool near) {
+		set_config_value_string(camera, "output", "PC", context);
+		int quality = -1;
+			if (near) set_config_value_string(camera, "manualfocusdrive", "Near 1", context);
+				else set_config_value_string(camera, "manualfocusdrive", "Far 1", context);
+
+		capture_to_file(FOCUS_FILE, FOCUS_EXPTIME, FOCUS_ISO);
+		quality = focus_quality(FOCUS_FILE + "G.fits");
+		std::cout << quality << std::endl;
+		set_config_value_string(camera, "output", "TFT", context);
+		return;
+  }
+
 	void focus() {
 		std::cout << "Focusing\n";
 		//first, focus to farthest possible
 		set_config_value_string(camera, "output", "PC", context);
 		for (int i=0; i < MAX_FOCUS_STEPS; i++)
-			set_config_value_string(camera, "manualfocusdrive", "Far 3", context);
+		  set_config_value_string(camera, "manualfocusdrive", "Far 3", context);
 
 		int last_quality = -1;
 		int quality = -1;
@@ -181,7 +194,7 @@ public:
 			c++;
 		}
 		//we actually moved past focus by one step, so go back
-		set_config_value_string(camera, "manualfocusdrive", "Far 2", context);
+		set_config_value_string(camera, "manualfocusdrive", "Far 1", context);
 		capture_to_file("final_focus", FOCUS_EXPTIME, FOCUS_ISO);
 		std::cout << focus_quality("final_focusG.fits") << std::endl;
 		set_config_value_string(camera, "output", "TFT", context);

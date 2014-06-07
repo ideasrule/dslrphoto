@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #install gphoto & dependencies
-sudo apt-get install libusb-dev libexif-dev
+sudo apt-get install libusb-dev libexif-dev g++ zlib1g-dev subversion
 
 #install packages needed for RAW -> FITS
 sudo apt-get install libcfitsio3-dev
@@ -25,7 +25,7 @@ make
 sudo make install
 
 #set up indi, eqmod, libnova
-sudo apt-get install libusb-dev libnova-dev
+sudo apt-get install libusb-dev libnova-dev cmake
 wget http://www.indilib.org/download/finish/10-source/8-indi-library.html -O indi.tar.gz
 tar xzf indi.tar.gz
 cd libindi*
